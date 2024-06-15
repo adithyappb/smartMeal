@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <title>User Registration</title>
+</head>
+<body>
+<div class="container-fluid m-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="header-container">
+                <h1>User Registration</h1>
+            </div>
+        </div>
+    </div>
+    <div>
+        {% include 'template_message.html' %}
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6 form-container">
+            <form method="post" class="register" onsubmit="return validateRegistrationForm()">
+                {% csrf_token %}
+                {% for field in form %}
+                <p>
+                    {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {{ field.label_tag }} {{ field }}
+                </p>
+                {% endfor %}
+                <div class="submit-button"><input type="submit" value="Register"></div>
+            </form>
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+
+    <script src="{% static 'js/registration.js' %}"></script>
+</div>
+</body>
+</html>
